@@ -1,16 +1,32 @@
-# action.yml
-name: 'Vulrep CLI'
-description: 'Trigger Vulrep scans'
+# action.yaml
+name: 'Vulrep GitHub Action'
+description: 'A GitHub Action that triggers a Vulrep scan'
 inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
+  vulrep_server:
+    description: 'URL of Vulrep instance'
     required: true
-    default: 'World'
-outputs:
-  time: # id of output
-    description: 'The time we greeted you'
+    default: "https://vulrep.com"
+  project_code:
+    description: 'Unique code for the project to be analysed'
+    required: true
+  token:
+    description: 'Vulrep project token'
+    required: true
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
-  args:
-    - ${{ inputs.who-to-greet }}
+  using: 'composite'
+  steps:
+    - name: Install Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    - name: Install Dependencies
+      run: pip install -r requirements.txt
+      shell: bash
+    - name: Fetch the number's square
+      id: get-square
+      run: python src/get_num_square.py
+      env:
+        INPUT_VULREP_SERVER: ${{ inputs.vulrep_server }}
+        INPUT_PROJECT_CODE: ${{ inputs.project_code }}
+        INPUT_TOKEN: ${{ inputs.token }}
+      shell: bash
