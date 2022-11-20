@@ -22,9 +22,9 @@ runs:
     - name: Install Dependencies
       run: pip install -r requirements.txt
       shell: bash
-    - name: Fetch the number's square
-      id: get-square
-      run: python src/get_num_square.py
+    - name: Trigger a Vulrep scan
+      id: trigger-vulrep-scan
+      run: python main.py
       env:
         INPUT_VULREP_SERVER: ${{ inputs.vulrep_server }}
         INPUT_PROJECT_CODE: ${{ inputs.project_code }}
