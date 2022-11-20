@@ -19,6 +19,8 @@ runs:
       uses: actions/setup-python@v4
       with:
         python-version: '3.11'
+    - name: Checkout
+      uses: actions/checkout@v2
     - name: Trigger a Vulrep scan
       id: trigger-vulrep-scan
       run: python main.py
