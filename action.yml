@@ -13,7 +13,7 @@ inputs:
     description: 'Vulrep project token'
     required: true
 runs:
-  using: 'composite'
+  using: "composite"
   steps:
     - name: Install Python
       uses: actions/setup-python@v4
@@ -21,7 +21,7 @@ runs:
         python-version: '3.11'
     - name: Trigger a Vulrep scan
       id: trigger-vulrep-scan
-      run: python main.py
+      run: python $GITHUB_ACTION_PATH/main.py
       env:
         INPUT_VULREP_SERVER: ${{ inputs.vulrep_server }}
         INPUT_PROJECT_CODE: ${{ inputs.project_code }}
