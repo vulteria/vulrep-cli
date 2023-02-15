@@ -13,14 +13,15 @@ def check_params(params):
     if params.token is None:
         params.token = os.environ.get("INPUT_TOKEN")
 
-    trigger_scan(params.vulrep_server, params.token, params.project_code)
+    trigger_scan(params.vulrep_server, params.token, params.project_code, params.branch)
 
 
-def trigger_scan(vulrep_url, token, project):
+def trigger_scan(vulrep_url, token, project, branch):
     url = vulrep_url + '/projects/triggerScanWithToken'
     payload = json.dumps({
         'projectCode': project,
-        'token': token
+        'token': token,
+        'branch': branch
     }).encode('utf8')
     req = urllib.request.Request(url, data=payload, method='POST', headers={
         'Content-Type': 'application/json'
@@ -36,6 +37,7 @@ if __name__ == '__main__':
     parser.add_argument('--vulrep_server', metavar='s', help='the URL to the target Vulrep server')
     parser.add_argument('--project_code', metavar='p', help='the target project\'s identifying code')
     parser.add_argument('--token', metavar='t', help='the secret access token for the Vulrep project')
+    parser.add_argument('--branch', metavar='b', help='the branch on which the scan should be executed. Defaults to the project\'s main branch')
     args = parser.parse_args()
     check_params(args)
 
