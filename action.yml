@@ -1,6 +1,9 @@
 # action.yaml
 name: 'Vulrep GitHub Action'
 description: 'A GitHub Action that triggers a Vulrep scan'
+branding:
+  icon: 'shield'
+  color: 'green'
 inputs:
   vulrep_server:
     description: 'URL of Vulrep instance'
